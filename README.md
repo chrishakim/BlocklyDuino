@@ -49,6 +49,8 @@ Thanks Arduino and Seeeduino guys for Arduino and Grove blocks.
 
 The project is also inspired by arduiblock https://github.com/taweili/ardublock and modkit http://www.modk.it/
 
+Chris Hakim (@chrishakim), just playing around
+
 ### License
 
 Copyright (C) 2012 Fred Lin gasolin+blockly@gmail.com
