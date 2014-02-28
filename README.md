@@ -1,4 +1,4 @@
-### Welcome to Lil'Blocks, the block programming language for Lil'Bot.
+### Lil'Blocks, a block programming language for Lil'Bot.
 
 Lil'Blocks is a derviative of [BlocklyDuino](https://github.com/gasolin/BlocklyDuino).
 
