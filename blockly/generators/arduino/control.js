@@ -77,7 +77,7 @@ Blockly.Arduino.controls_whileUntil = function() {
     }
     argument0 = '!' + argument0;
   }
-  return 'while (' + argument0 + ') {\n' + branch + '}\n';
+  return 'while (' + argument0 + ') {\n' + branch + '  balanceRobot();\n}\n';
 };
 
 Blockly.Arduino.controls_for = function() {
@@ -101,7 +101,7 @@ Blockly.Arduino.controls_for = function() {
     code = 'for (' + variable0 + ' = ' + argument0 + '; ' +
         variable0 + (up ? ' <= ' : ' >= ') + argument1 + '; ' +
         variable0 + (up ? '++' : '--') + ') {\n' +
-        branch + '}\n';
+        branch + '  balanceRobot();\n}\n';
   } else {
     code = '';
     // Cache non-trivial values to variables to prevent repeated look-ups.
@@ -123,7 +123,7 @@ Blockly.Arduino.controls_for = function() {
         variable0 + ' >= ' + endVar + ';\n' +
         '    ' + variable0 + ' += (' + startVar + ' <= ' + endVar +
             ') ? 1 : -1) {\n' +
-        branch0 + '}\n';
+        branch0 + '  balanceRobot();\n}\n';
   }
   return code;
 };
@@ -140,7 +140,7 @@ Blockly.Arduino.controls_forEach = function() {
         '\'' + this.id + '\'') + branch;
   }
   var code = 'for (var ' + variable0 + ' in  ' + argument0 + ') {\n' +
-      branch + '}\n';
+      branch + '  balanceRobot();\n}\n';
   return code;
 };
 
@@ -150,7 +150,7 @@ Blockly.Arduino.controls_flow_statements = function() {
     case 'BREAK':
       return 'break;\n';
     case 'CONTINUE':
-      return 'continue;\n';
+      return 'balanceRobot();\ncontinue;\n';
   }
   throw 'Unknown flow statement.';
 };

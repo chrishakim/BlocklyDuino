@@ -21,6 +21,15 @@
  * @fileoverview Helper functions for generating Arduino for blocks.
  * @author gasolin@gmail.com (Fred Lin)
  */
+
+/**
+ * Modified by Chris Hakim for Lil'Bot:
+ * Disabled Arduino pins in use by Lil'Bot to avoid conflicts
+ * Added robot code in global definitions, setup() and loop()
+ * New String variables robotGlobals, robotSetups and robotLoop
+ * are used for that purpose.
+ */
+
 'use strict';
 
 Blockly.Arduino = Blockly.Generator.get('Arduino');
@@ -40,6 +49,14 @@ Blockly.Arduino.RESERVED_WORDS_ +=
     // http://arduino.cc/en/Reference/HomePage
 'setup,loop,if,else,for,switch,case,while,do,break,continue,return,goto,define,include,HIGH,LOW,INPUT,OUTPUT,INPUT_PULLUP,true,false,interger, constants,floating,point,void,bookean,char,unsigned,byte,int,word,long,float,double,string,String,array,static, volatile,const,sizeof,pinMode,digitalWrite,digitalRead,analogReference,analogRead,analogWrite,tone,noTone,shiftOut,shitIn,pulseIn,millis,micros,delay,delayMicroseconds,min,max,abs,constrain,map,pow,sqrt,sin,cos,tan,randomSeed,random,lowByte,highByte,bitRead,bitWrite,bitSet,bitClear,bit,attachInterrupt,detachInterrupt,interrupts,noInterrupts'
 ;
+
+// Add robot reserved words (global variables, function names and #define constants)
+Blockly.Arduino.RESERVED_WORDS_ += '';
+
+// Define robot setups here
+var robotGlobals = '\n/* Many lines\n   of\n   robot definitions\n   here */\n\n';
+var robotSetups = '\n/* Many lines\n   of\n   robot setup code\n   here */\n';
+var robotLoop = '\n  balanceRobot();\n';
 
 /**
  * Order of operation ENUMs.
@@ -69,8 +86,26 @@ Blockly.Arduino.ORDER_NONE = 99;          // (...)
 var profile = {
 	arduino: {
 		description: "Arduino standard-compatible board",
-		digital : [["1", "1"], ["2", "2"], ["3", "3"], ["4", "4"], ["5", "5"], ["6", "6"], ["7", "7"], ["8", "8"], ["9", "9"], ["10", "10"], ["11", "11"], ["12", "12"], ["13", "13"], ["A0", "A0"], ["A1", "A1"], ["A2", "A2"], ["A3", "A3"], ["A4", "A4"], ["A5", "A5"]],
-		analog : [["A0", "A0"], ["A1", "A1"], ["A2", "A2"], ["A3", "A3"], ["A4", "A4"], ["A5", "A5"]],
+		digital : [
+               // ["1", "1"], // Disabled, used for serial port
+               // ["2", "2"], // Disabled, used for wheel encoder
+               // ["3", "3"], // Disabled, used for wheel encoder
+               // ["4", "4"], // Disabled, used to poll IMU interrupt
+               ["5", "5"], ["6", "6"],
+               // ["7", "7"], ["8", "8"], ["9", "9"], ["10", "10"], // Disabled, motor control
+               // ["11", "11"], // Disabled, reserved for buzzer
+               ["12", "12"], ["13", "13"],
+               ["A0", "A0"],
+               // ["A1", "A1"], // Disabled, used to measure battery voltage
+               ["A2", "A2"], ["A3", "A3"],
+               // ["A4", "A4"], ["A5", "A5"] // Disabled, used for I2C
+               ],
+		analog : [["A0", "A0"],
+              // ["A1", "A1"], // Disabled, used to measure battery voltage
+              ["A2", "A2"], ["A3", "A3"],
+              // ["A4", "A4"], ["A5", "A5"] // Disabled, used for I2C
+              ],
+		pwmOutput : [["5", "5"], ["6", "6"],], // The rest is used by the robot
         serial : 9600,
 	},
 	arduino_mega:{
@@ -120,7 +155,7 @@ Blockly.Arduino.finish = function(code) {
   // Indent every line.
   code = '  ' + code.replace(/\n/g, '\n  ');
   code = code.replace(/\n\s+$/, '\n');
-  code = 'void loop() \n{\n' + code + '\n}';
+  code = 'void loop() {\n' + code + robotLoop + '}';
 
   // Convert the definitions dictionary into a list.
   var imports = [];
@@ -140,7 +175,7 @@ Blockly.Arduino.finish = function(code) {
     setups.push(Blockly.Arduino.setups_[name]);
   }
   
-  var allDefs = imports.join('\n') + '\n\n' + definitions.join('\n') + '\nvoid setup() \n{\n  '+setups.join('\n  ') + '\n}'+ '\n\n';
+  var allDefs = imports.join('\n') + definitions.join('\n') + robotGlobals + '\nvoid setup() {\n  ' + robotSetups + setups.join('\n  ') + '\n}\n';
   return allDefs.replace(/\n\n+/g, '\n\n').replace(/\n*$/, '\n\n\n') + code;
 };
 

@@ -72,6 +72,7 @@ Blockly.Arduino.logic_boolean = function() {
 };
 
 Blockly.Arduino.logic_null = function() {
-  var code = 'NULL';
-  return [code ,Blockly.Arduino.ORDER_ATOMIC];
+    var code = 'false';
+    return [code ,Blockly.Arduino.ORDER_ATOMIC];
 };
+

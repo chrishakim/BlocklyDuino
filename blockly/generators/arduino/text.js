@@ -26,8 +26,9 @@
 Blockly.Arduino = Blockly.Generator.get('Arduino');
 
 Blockly.Arduino.text = function() {
-  // Text value.
-  var code = Blockly.Arduino.quote_(this.getTitleValue('TEXT'));
+  // Text value
+  var code = Blockly.Arduino.quote_(this.getTitleValue('TEXT')); // Quotes
+  // var code = this.getTitleValue('TEXT'); // No quotes
   return [code, Blockly.Arduino.ORDER_ATOMIC];
 };
 
