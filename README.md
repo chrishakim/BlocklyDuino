@@ -1,4 +1,7 @@
-### Welcome to BlocklyDuino.
+### Welcome to Lil'Blocks, the block programming language for Lil'Bot.
+
+Lil'Blocks is a derviative of BlocklyDuino.
+
 BlocklyDuino is a web-based visual programming editor for [Arduino](http://www.arduino.cc/).
 
 BlocklyDuino is based on [Blockly](http://code.google.com/p/blockly/), the web-based, graphical programming editor. Provide static type language blocks and code generators for arduino programming.
@@ -49,7 +52,7 @@ Thanks Arduino and Seeeduino guys for Arduino and Grove blocks.
 
 The project is also inspired by arduiblock https://github.com/taweili/ardublock and modkit http://www.modk.it/
 
-Chris Hakim (@chrishakim), just playing around
+Chris Hakim (@chrishakim), Lil'Blocks adaptation of BlocklyDuino, in progress
 
 ### License
 
