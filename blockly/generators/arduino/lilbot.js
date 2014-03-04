@@ -31,7 +31,7 @@ init: function() {
   .appendTitle("beep 1")
   this.setPreviousStatement(true);
   this.setNextStatement(true);
-  this.setTooltip('Make robot whistle');
+  this.setTooltip('Style-one robot whistle');
 }
 };
 
@@ -45,7 +45,7 @@ init: function() {
   .appendTitle("beep 2")
   this.setPreviousStatement(true);
   this.setNextStatement(true);
-  this.setTooltip('Make robot whistle');
+  this.setTooltip('Style-two robot whistle');
 }
 };
 
