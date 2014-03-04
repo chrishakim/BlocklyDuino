@@ -50,13 +50,29 @@ Blockly.Arduino.RESERVED_WORDS_ +=
 'setup,loop,if,else,for,switch,case,while,do,break,continue,return,goto,define,include,HIGH,LOW,INPUT,OUTPUT,INPUT_PULLUP,true,false,interger, constants,floating,point,void,bookean,char,unsigned,byte,int,word,long,float,double,string,String,array,static, volatile,const,sizeof,pinMode,digitalWrite,digitalRead,analogReference,analogRead,analogWrite,tone,noTone,shiftOut,shitIn,pulseIn,millis,micros,delay,delayMicroseconds,min,max,abs,constrain,map,pow,sqrt,sin,cos,tan,randomSeed,random,lowByte,highByte,bitRead,bitWrite,bitSet,bitClear,bit,attachInterrupt,detachInterrupt,interrupts,noInterrupts'
 ;
 
-// Add robot reserved words (global variables, function names and #define constants)
+// Add lil'bot reserved words (global variables, function names and #define constants)
 Blockly.Arduino.RESERVED_WORDS_ += '';
 
 // Define robot setups here
-var robotGlobals = '\n/* Many lines\n   of\n   robot definitions\n   here */\n\n';
-var robotSetups = '\n/* Many lines\n   of\n   robot setup code\n   here */\n';
-var robotLoop = '\n  balanceRobot();\n';
+var robotGlobals =
+  '\n#include <LilBot.h>\n#include <Wire.h>\n#include <Serial.h>\n#include "LilBotI2C.h"\n\n';
+
+// Add wheel-encoder interrupts
+robotGlobals += 'void leftWheelEncoder(void) { // ISR\n\
+  if (LilBot.leftForward)\n  \
+  LilBot.leftWheelPosition++;\n\
+  else\n  \
+  LilBot.leftWheelPosition--;\n}\n\n\
+  void rightWheelEncoder(void) { // ISR\n\
+  if (LilBot.rightForward)\n  \
+  LilBot.rightWheelPosition++;\n\
+  else\n  \
+  LilBot.rightWheelPosition--;\n}\n';
+
+var robotSetups =
+  'Serial.begin(115200);\n  Wire.begin();\n  attachInterrupt(0, leftWheelEncoder, CHANGE);\n  attachInterrupt(1, rightWheelEncoder, CHANGE);';
+
+var robotLoop = '\n  LilBot.balance();\n';
 
 /**
  * Order of operation ENUMs.
@@ -91,7 +107,8 @@ var profile = {
                // ["2", "2"], // Disabled, used for wheel encoder
                // ["3", "3"], // Disabled, used for wheel encoder
                // ["4", "4"], // Disabled, used to poll IMU interrupt
-               ["5", "5"], ["6", "6"],
+               // ["5", "5"], // Disabled, used to poll Si1143 interrupt
+               ["6", "6"],
                // ["7", "7"], ["8", "8"], ["9", "9"], ["10", "10"], // Disabled, motor control
                // ["11", "11"], // Disabled, reserved for buzzer
                ["12", "12"], ["13", "13"],
@@ -105,7 +122,7 @@ var profile = {
               ["A2", "A2"], ["A3", "A3"],
               // ["A4", "A4"], ["A5", "A5"] // Disabled, used for I2C
               ],
-		pwmOutput : [["5", "5"], ["6", "6"],], // The rest is used by the robot
+		pwmOutput : [["6", "6"],], // The rest is used by the robot
         serial : 9600,
 	},
 	arduino_mega:{
