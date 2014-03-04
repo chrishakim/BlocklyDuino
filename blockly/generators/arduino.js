@@ -51,7 +51,7 @@ Blockly.Arduino.RESERVED_WORDS_ +=
 ;
 
 // Add lil'bot reserved words (global variables, function names and #define constants)
-Blockly.Arduino.RESERVED_WORDS_ += '';
+Blockly.Arduino.RESERVED_WORDS_ += ',';
 
 // Define robot setups here
 var robotGlobals =
