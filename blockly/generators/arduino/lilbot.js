@@ -4,6 +4,9 @@
  */
 'use strict';
 
+//Blockly.HSV_SATURATION = 0.8;
+Blockly.HSV_VALUE = 0.99;
+
 //define blocks
 if (!Blockly.Language) Blockly.Language = {};
 
@@ -42,7 +45,7 @@ helpUrl: '',
 init: function() {
   this.setColour(290);
 	this.appendDummyInput("")
-  .appendTitle("beep 2")
+  .appendTitle("beep 2");
   this.setPreviousStatement(true);
   this.setNextStatement(true);
   this.setTooltip('Style-two robot whistle');
@@ -56,10 +59,29 @@ helpUrl: '',
 init: function() {
   this.setColour(290);
 	this.appendDummyInput("")
-  .appendTitle("siren")
+  .appendTitle("siren");
   this.setPreviousStatement(true);
   this.setNextStatement(true);
   this.setTooltip('Make robot whistle');
+}
+};
+
+// Define emote block
+Blockly.Language.emote = {
+category: 'lilBot',
+helpUrl: '',
+init: function() {
+  this.setColour(290);
+	this.appendDummyInput("")
+  .appendTitle("emote");
+  this.appendValueInput("EMOTE")
+  .setCheck("Number");
+  var dropdown = new Blockly.FieldDropdown([["happy", "EMO_HAPPY"], ["sad", "EMO_SAD"], ["naughty", "EMO_NAUGHTY"], ["angry", "EMO_ANGRY"], ["off", "EMO_OFF"]]);
+  this.appendField(dropdown, 'MODE');
+//  .appendField(new Blockly.FieldDropdown([["happy", "EMO_HAPPY"], ["sad", "EMO_SAD"], ["naughty", "EMO_NAUGHTY"], ["angry", "EMO_ANGRY"], ["off", "EMO_OFF"]]), "emote");
+  this.setPreviousStatement(true, "null");
+  this.setNextStatement(true, "null");
+  this.setTooltip('');
 }
 };
 
@@ -135,6 +157,12 @@ Blockly.Arduino.beepTwo = function() {
 
 Blockly.Arduino.siren = function() {
   return 'siren();\n';
+};
+
+Blockly.Arduino.emote = function() {
+  var value_name = Blockly.JavaScript.valueToCode(block, 'EMOTE', Blockly.JavaScript.ORDER_ATOMIC);
+  var dropdown_emote = block.getFieldValue('emote');
+  return 'emote(' + dropdown_emote + ');\n';
 };
 
 Blockly.Arduino.customArduinoCode = function() {

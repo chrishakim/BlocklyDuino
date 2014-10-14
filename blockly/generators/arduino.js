@@ -55,24 +55,15 @@ Blockly.Arduino.RESERVED_WORDS_ += ',';
 
 // Define robot setups here
 var robotGlobals =
-  '\n#include <LilBot.h>\n#include <Wire.h>\n#include <Serial.h>\n#include "LilBotI2C.h"\n\n';
+  '\n#include <LilBot.h>\n#include <Wire.h>\n#include <EEPROM.h>\n\n';
 
 // Add wheel-encoder interrupts
-robotGlobals += 'void leftWheelEncoder(void) { // ISR\n\
-  if (LilBot.leftForward)\n  \
-  LilBot.leftWheelPosition++;\n\
-  else\n  \
-  LilBot.leftWheelPosition--;\n}\n\n\
-  void rightWheelEncoder(void) { // ISR\n\
-  if (LilBot.rightForward)\n  \
-  LilBot.rightWheelPosition++;\n\
-  else\n  \
-  LilBot.rightWheelPosition--;\n}\n';
+robotGlobals += 'LilBot Bot;\n\n';
 
 var robotSetups =
-  'Serial.begin(115200);\n  Wire.begin();\n  attachInterrupt(0, leftWheelEncoder, CHANGE);\n  attachInterrupt(1, rightWheelEncoder, CHANGE);';
+  'Bot.begin();';
 
-var robotLoop = '\n  LilBot.balance();\n';
+var robotLoop = '\n  Bot.balance();\n';
 
 /**
  * Order of operation ENUMs.
@@ -172,7 +163,7 @@ Blockly.Arduino.finish = function(code) {
   // Indent every line.
   code = '  ' + code.replace(/\n/g, '\n  ');
   code = code.replace(/\n\s+$/, '\n');
-  code = 'void loop() {\n' + code + robotLoop + '}';
+  code = 'void loop() {\n' + code + robotLoop + '}\n';
 
   // Convert the definitions dictionary into a list.
   var imports = [];
