@@ -110,7 +110,6 @@ init: function() {
   this.setColour(0);
 	this.appendDummyInput("")
   .appendTitle("emote")
-
   .appendTitle(new Blockly.FieldDropdown([
   ["happy", "Bot.happy"],
   ["blank face", "Bot.blankFace"],
@@ -135,12 +134,10 @@ init: function() {
   ["smiling", "Bot.smiling"],
   ["very sad", "Bot.verySad"],
   ["winking", "Bot.winking"],]), "EMOTION");
-
-  //this.appendValueInput("EMOTIONCODE").setCheck(Number);
   this.setInputsInline(true);
   this.setPreviousStatement(true);
   this.setNextStatement(true);
-  this.setTooltip('Turn left (+) or right (-) a number of degrees');
+  this.setTooltip('Affect facial expression');
 }
 };
 
@@ -173,6 +170,48 @@ init: function() {
   this.setPreviousStatement(true);
   this.setNextStatement(true);
   this.setTooltip('Translate text to astromech droid language');
+}
+};
+
+// Define front obstacle handler
+Blockly.Language.frontObstacleHandler = {
+category: 'lilBot event',
+helpUrl: '',
+init: function() {
+  this.setColour(0);
+	this.appendDummyInput("")
+  .appendTitle("if front obstacle");
+  this.appendStatementInput('DO')
+  .appendTitle(Blockly.LANG_CONTROLS_IF_MSG_THEN);
+  this.setTooltip('Exception when front obstacle is detected');
+}
+};
+
+// Define right obstacle handler
+Blockly.Language.rightObstacleHandler = {
+category: 'lilBot event',
+helpUrl: '',
+init: function() {
+  this.setColour(0);
+	this.appendDummyInput("")
+  .appendTitle("if right obstacle");
+  this.appendStatementInput('DO')
+  .appendTitle(Blockly.LANG_CONTROLS_IF_MSG_THEN);
+  this.setTooltip('Exception when right obstacle is detected');
+}
+};
+
+// Define left obstacle handler
+Blockly.Language.leftObstacleHandler = {
+category: 'lilBot event',
+helpUrl: '',
+init: function() {
+  this.setColour(0);
+	this.appendDummyInput("")
+  .appendTitle("if left obstacle");
+  this.appendStatementInput('DO')
+  .appendTitle(Blockly.LANG_CONTROLS_IF_MSG_THEN);
+  this.setTooltip('Exception when left obstacle is detected');
 }
 };
 
@@ -224,4 +263,25 @@ Blockly.Arduino.say = function() {
 
 Blockly.Arduino.balance = function() {
   return 'Bot.balance();\n';
+};
+
+Blockly.Arduino.frontObstacleHandler = function() {
+  var branch = Blockly.Arduino.statementToCode(this, 'DO');
+  Blockly.Arduino.definitions_['frontObstacleHandler'] = 'void frontObstacle(void) {\n' + branch + '}\n';
+  Blockly.Arduino.setups_['setup_var'+'frontObstacleHandler'] = 'frontObstacleHandler = frontObstacle;';
+  return '';
+};
+
+Blockly.Arduino.rightObstacleHandler = function() {
+  var branch = Blockly.Arduino.statementToCode(this, 'DO');
+  Blockly.Arduino.definitions_['rightObstacleHandler'] = 'void rightObstacle(void) {\n' + branch + '}\n';
+  Blockly.Arduino.setups_['setup_var'+'rightObstacleHandler'] = 'rightObstacleHandler = rightObstacle;';
+  return '';
+};
+
+Blockly.Arduino.leftObstacleHandler = function() {
+  var branch = Blockly.Arduino.statementToCode(this, 'DO');
+  Blockly.Arduino.definitions_['leftObstacleHandler'] = 'void leftObstacle(void) {\n' + branch + '}\n';
+  Blockly.Arduino.setups_['setup_var'+'leftObstacleHandler'] = 'leftObstacleHandler = leftObstacle;';
+  return '';
 };
