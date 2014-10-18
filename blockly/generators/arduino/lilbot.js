@@ -110,12 +110,33 @@ init: function() {
   this.setColour(0);
 	this.appendDummyInput("")
   .appendTitle("emote")
-/*
+
   .appendTitle(new Blockly.FieldDropdown([
-            ["HIGH", "HIGH"], ["LOW", "LOW"]
-                                          ]), "EMOTION");
-*/
-  this.appendValueInput("EMOTIONCODE").setCheck(Number);
+  ["happy", "Bot.happy"],
+  ["blank face", "Bot.blankFace"],
+  ["afraid", "Bot.afraid"],
+  ["amused", "Bot.amused"],
+  ["angry", "Bot.angry"],
+  ["blissful", "Bot.blissful"],
+  ["cool", "Bot.cool"],
+  ["crying", "Bot.crying"],
+  ["disappointed", "Bot.disappointed"],
+  ["embarrassed", "Bot.embarrassed"],
+  ["impatient", "Bot.impatient"],
+  ["naughty", "Bot.naughty"],
+  ["neutral", "Bot.neutral"],
+  ["nonplussed", "Bot.nonplussed"],
+  ["outraged", "Bot.outraged"],
+  ["proud", "Bot.proud"],
+  ["resigned", "Bot.resigned"],
+  ["sad", "Bot.sad"],
+  ["sarcastic", "Bot.sarcastic"],
+  ["shocked", "Bot.shocked"],
+  ["smiling", "Bot.smiling"],
+  ["very sad", "Bot.verySad"],
+  ["winking", "Bot.winking"],]), "EMOTION");
+
+  //this.appendValueInput("EMOTIONCODE").setCheck(Number);
   this.setInputsInline(true);
   this.setPreviousStatement(true);
   this.setNextStatement(true);
@@ -185,9 +206,9 @@ Blockly.Arduino.emoteByNumber = function() {
 };
 
 Blockly.Arduino.emote = function() {
-  var value_num = Blockly.Arduino.valueToCode(this, 'EMOTIONCODE', Blockly.Arduino.ORDER_ATOMIC);
-  value_num = value_num.replace('(','').replace(')','');
-  return 'Bot.emote(' + value_num + ');\n';
+  var dropdown_emotion = this.getTitleValue('EMOTION');
+  //value_num = value_num.replace('(','').replace(')','');
+  return 'Bot.emote(' + dropdown_emotion + ');\n';
 };
 
 Blockly.Arduino.sound = function() {
