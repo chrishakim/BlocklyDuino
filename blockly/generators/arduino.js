@@ -47,11 +47,10 @@ if (!Blockly.Arduino.RESERVED_WORDS_) {
 
 Blockly.Arduino.RESERVED_WORDS_ +=
     // http://arduino.cc/en/Reference/HomePage
-'setup,loop,if,else,for,switch,case,while,do,break,continue,return,goto,define,include,HIGH,LOW,INPUT,OUTPUT,INPUT_PULLUP,true,false,interger, constants,floating,point,void,bookean,char,unsigned,byte,int,word,long,float,double,string,String,array,static, volatile,const,sizeof,pinMode,digitalWrite,digitalRead,analogReference,analogRead,analogWrite,tone,noTone,shiftOut,shitIn,pulseIn,millis,micros,delay,delayMicroseconds,min,max,abs,constrain,map,pow,sqrt,sin,cos,tan,randomSeed,random,lowByte,highByte,bitRead,bitWrite,bitSet,bitClear,bit,attachInterrupt,detachInterrupt,interrupts,noInterrupts'
-;
+  'setup,loop,if,else,for,switch,case,while,do,break,continue,return,goto,define,include,HIGH,LOW,INPUT,OUTPUT,INPUT_PULLUP,true,false,integer, constants,floating,point,void,bookean,char,unsigned,byte,int,word,long,float,double,string,String,array,static, volatile,const,sizeof,pinMode,digitalWrite,digitalRead,analogReference,analogRead,analogWrite,tone,noTone,shiftOut,shitIn,pulseIn,millis,micros,delay,delayMicroseconds,min,max,abs,constrain,map,pow,sqrt,sin,cos,tan,randomSeed,random,lowByte,highByte,bitRead,bitWrite,bitSet,bitClear,bit,attachInterrupt,detachInterrupt,interrupts,noInterrupts,';
 
 // Add lil'bot reserved words (global variables, function names and #define constants)
-Blockly.Arduino.RESERVED_WORDS_ += ',';
+Blockly.Arduino.RESERVED_WORDS_ += 'Bot,LilBot,rightWheelPosition,leftWheelPosition,wheelPosition,wheelLastPosition,rightForward,leftForward,rightWheelEncoder,leftWheelEncoder,frontObstacleHandler,rightObstacleHandler,leftObstacleHandler,edgeHandler,defaultFrontObstacleHandler,defaultRightObstacleHandler,defaultLeftObstacleHandler,defaultEdgeHandler';
 
 // Define robot setups here
 var robotGlobals =
@@ -61,7 +60,7 @@ var robotGlobals =
 robotGlobals += 'LilBot Bot;\n\n';
 
 var robotSetups =
-  'Bot.begin();';
+  'Bot.begin();\n\n  ';
 
 var robotLoop = '\n  Bot.balance();\n';
 
@@ -183,7 +182,7 @@ Blockly.Arduino.finish = function(code) {
     setups.push(Blockly.Arduino.setups_[name]);
   }
   
-  var allDefs = imports.join('\n') + definitions.join('\n') + robotGlobals + '\nvoid setup() {\n  ' + robotSetups + setups.join('\n  ') + '\n}\n';
+  var allDefs = imports.join('\n') + robotGlobals + definitions.join('\n') + '\nvoid setup() {\n  ' + robotSetups + setups.join('\n  ') + '\n}\n';
   return allDefs.replace(/\n\n+/g, '\n\n').replace(/\n*$/, '\n\n\n') + code;
 };
 
