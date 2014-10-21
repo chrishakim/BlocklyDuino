@@ -70,8 +70,8 @@ init: function() {
 }
 };
 
-// Define turn block
-Blockly.Language.turn = {
+// Define rotate block
+Blockly.Language.rotate = {
 category: 'lilBot move',
 helpUrl: '',
 init: function() {
@@ -98,7 +98,7 @@ init: function() {
   this.setInputsInline(true);
   this.setPreviousStatement(true);
   this.setNextStatement(true);
-  this.setTooltip('Turn left (+) or right (-) a number of degrees');
+  this.setTooltip('Show a facial expression');
 }
 };
 
@@ -232,7 +232,7 @@ Blockly.Arduino.go = function() {
   return 'Bot.go(' + value_num + ');\n';
 };
 
-Blockly.Arduino.turn = function() {
+Blockly.Arduino.rotate = function() {
   var value_num = Blockly.Arduino.valueToCode(this, 'DEGREES', Blockly.Arduino.ORDER_ATOMIC);
   value_num = value_num.replace('(','').replace(')','');
   return 'Bot.rotate(' + value_num + ');\n';
