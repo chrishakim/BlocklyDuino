@@ -1,6 +1,17 @@
 Lil’Blocks
 ==========
 
+2014-10-20
+Procedure declaration problem fixed: function parameters were declared without type, and
+global variables of int type were created. If procedure returned a value, procedure return type
+was declared as Dynamic, which Arduino did not want to compile.
+There is now a superficial fix of always declaring function parameters as int type and return
+type as either void or int. This works, but redundant global variables are also created. This
+may be confusing for beginners.
+
+A block has been renamed from “rotate” to “turn” to be clearer to young programmers. The
+Arduino rotate method keeps the same name.
+
 2014-10-18
 Initial robot blocks created
 
