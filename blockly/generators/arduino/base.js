@@ -320,6 +320,6 @@ Blockly.Arduino.serial_print = function() {
   // Setup already happening in Bot.begin()
   // Blockly.Arduino.setups_['setup_serial_'+profile.default.serial] = 'Serial.begin('+profile.default.serial+');\n';
   
-  var code = 'Serial.print('+content+');\nSerial.print(\'\\t\');\n';
+  var code = 'Serial.print('+content+');\n';
   return code;
 };
