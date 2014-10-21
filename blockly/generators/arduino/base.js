@@ -315,9 +315,10 @@ Blockly.Arduino.servo_read_degrees = function() {
 
 Blockly.Arduino.serial_print = function() {
   var content = Blockly.Arduino.valueToCode(this, 'CONTENT', Blockly.Arduino.ORDER_ATOMIC) || '0'
-  //content = content.replace('(','').replace(')','');
+  content = content.replace('(','').replace(')','');
   
-  Blockly.Arduino.setups_['setup_serial_'+profile.default.serial] = 'Serial.begin('+profile.default.serial+');\n';
+  // Setup already happening in Bot.begin()
+  // Blockly.Arduino.setups_['setup_serial_'+profile.default.serial] = 'Serial.begin('+profile.default.serial+');\n';
   
   var code = 'Serial.print('+content+');\nSerial.print(\'\\t\');\n';
   return code;

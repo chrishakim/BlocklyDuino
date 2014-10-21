@@ -113,7 +113,7 @@ var profile = {
               // ["A4", "A4"], ["A5", "A5"] // Disabled, used for I2C
               ],
 		pwmOutput : [["6", "6"],], // The rest is used by the robot
-        serial : 9600,
+        serial : 9600,  // Not used, already initialized in Bot.begin()
 	},
 	arduino_mega:{
 		description: "Arduino Mega-compatible board",
