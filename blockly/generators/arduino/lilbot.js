@@ -10,6 +10,22 @@
 //define blocks
 if (!Blockly.Language) Blockly.Language = {};
 
+// Define single-parameter random generator
+Blockly.Language.randomSeed = {
+category: 'Math',
+helpUrl: '',
+init: function() {
+  this.setColour(230);
+	this.appendDummyInput("")
+  .appendTitle("random seed");
+  this.appendValueInput("SEED").setCheck(Number);
+  this.setInputsInline(true);
+  this.setPreviousStatement(true);
+  this.setNextStatement(true);
+  this.setTooltip('Seed the random number generator');
+}
+};
+
 // Define stop block
 Blockly.Language.stop = {
 category: 'lilBot move',
@@ -216,6 +232,12 @@ init: function() {
 };
 
 // define generators
+Blockly.Arduino.randomSeed = function() {
+  var value_num = Blockly.Arduino.valueToCode(this, 'SEED', Blockly.Arduino.ORDER_ATOMIC);
+  value_num = value_num.replace('(','').replace(')','');
+  return 'randomSeed(' + value_num + ');\n';
+};
+
 Blockly.Arduino.stop = function() {
   return 'Bot.stop();\n';
 };
