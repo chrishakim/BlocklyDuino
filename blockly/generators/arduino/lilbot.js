@@ -10,7 +10,7 @@
 //define blocks
 if (!Blockly.Language) Blockly.Language = {};
 
-// Define single-parameter random generator
+// Define random-seed block
 Blockly.Language.randomSeed = {
 category: 'Math',
 helpUrl: '',
@@ -23,6 +23,21 @@ init: function() {
   this.setPreviousStatement(true);
   this.setNextStatement(true);
   this.setTooltip('Seed the random number generator');
+}
+};
+
+// Define random number generator block
+Blockly.Language.randomGen = {
+category: 'Math',
+helpUrl: '',
+init: function() {
+  this.setColour(230);
+	this.appendDummyInput("")
+  .appendTitle("random");
+  this.appendValueInput("MAX_BOUND").setCheck(Number);
+  this.setInputsInline(true);
+  this.setOutput(true, Number);
+  this.setTooltip('Random number generator');
 }
 };
 
@@ -232,10 +247,20 @@ init: function() {
 };
 
 // define generators
+
 Blockly.Arduino.randomSeed = function() {
   var value_num = Blockly.Arduino.valueToCode(this, 'SEED', Blockly.Arduino.ORDER_ATOMIC);
   value_num = value_num.replace('(','').replace(')','');
   return 'randomSeed(' + value_num + ');\n';
+};
+
+Blockly.Arduino.randomGen = function() {
+  var code;
+  var value_num = Blockly.Arduino.valueToCode(this, 'MAX_BOUND', Blockly.Arduino.ORDER_ATOMIC);
+  value_num = value_num.replace('(','').replace(')','');
+  code = 'random(' + value_num + ')';
+  return [code, Blockly.Arduino.ORDER_ATOMIC];
+  //return code;
 };
 
 Blockly.Arduino.stop = function() {
